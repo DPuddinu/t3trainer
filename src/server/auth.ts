@@ -1,14 +1,13 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import type { User } from "next-auth";
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import type { DefaultJWT } from "next-auth/jwt";
+import GoogleProvider from "next-auth/providers/google";
 
-import { env } from "~/env";
-import { db } from "~/server/db";
-import { mysqlTable } from "~/server/db/schema";
+import { env } from "~/env.mjs";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -18,17 +17,18 @@ import { mysqlTable } from "~/server/db/schema";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: {
-      id: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
+    user: User
   }
 
   // interface User {
   //   // ...other properties
   //   // role: UserRole;
   // }
+}
+declare module "next-auth/jwt" {
+  interface JWT extends DefaultJWT {
+    user: User;
+  }
 }
 
 /**
@@ -38,19 +38,21 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: ({ session, token }) => {
+      session.user = token.user
+      return session
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.user = user;
+      }
+      return token
+    }
   },
-  adapter: DrizzleAdapter(db, mysqlTable),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     /**
      * ...add more providers here.

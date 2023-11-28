@@ -1,11 +1,7 @@
+import { GeistSans } from "geist/font/sans";
+import type { PropsWithChildren } from "react";
+import { ThemeProvider } from "~/components/providers/ThemeProvider";
 import "~/styles/globals.css";
-
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
 
 export const metadata = {
   title: "Create T3 App",
@@ -15,12 +11,19 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: PropsWithChildren) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>{children}</body>
+    <html lang="en" className={GeistSans.className} suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
