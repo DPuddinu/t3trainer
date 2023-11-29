@@ -7,7 +7,7 @@ import {
 import type { DefaultJWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 
-import { env } from "~/env.mjs";
+import { env } from "~/env.js";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -53,6 +53,9 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: { show_dialog: true },
+      },
     }),
     /**
      * ...add more providers here.

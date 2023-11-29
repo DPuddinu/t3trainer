@@ -1,6 +1,9 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GeistSans } from "geist/font/sans";
 import type { PropsWithChildren } from "react";
+import Provider from "~/components/providers/Provider";
 import { ThemeProvider } from "~/components/providers/ThemeProvider";
+import { getServerAuthSession } from "~/server/auth";
 import "~/styles/globals.css";
 
 export const metadata = {
@@ -9,20 +12,24 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: PropsWithChildren) {
+  const session = await getServerAuthSession();
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+          <Provider session={session}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </Provider>
+
       </body>
     </html>
   );
