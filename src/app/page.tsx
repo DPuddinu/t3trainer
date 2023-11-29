@@ -1,9 +1,8 @@
 'use client'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { Logged } from "~/components/logged";
+import { Logged } from "~/components/logged/logged";
 import { Login } from "~/components/login";
-import { getServerAuthSession } from "~/server/auth";
 
 const queryClient = new QueryClient()
 

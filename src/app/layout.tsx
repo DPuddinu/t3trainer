@@ -1,5 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from "geist/font/sans";
+
 import type { PropsWithChildren } from "react";
 import Provider from "~/components/providers/Provider";
 import { ThemeProvider } from "~/components/providers/ThemeProvider";
@@ -17,18 +18,18 @@ export default async function RootLayout({
 }: PropsWithChildren) {
   const session = await getServerAuthSession();
   return (
-    <html lang="en" className={GeistSans.className} suppressHydrationWarning>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body>
-          <Provider session={session}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </Provider>
+        <Provider session={session}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </Provider>
 
       </body>
     </html>
