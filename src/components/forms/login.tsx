@@ -2,8 +2,8 @@
 
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { Button } from "./primitives/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./primitives/ui/card";
+import { Button } from "../primitives/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../primitives/ui/card";
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
