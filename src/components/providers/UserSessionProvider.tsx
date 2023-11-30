@@ -7,7 +7,7 @@ import { type PropsWithChildren } from "react";
 interface ProviderProps extends PropsWithChildren {
   session: Session | null;
 }
-const Provider = ({session, children}: ProviderProps) => {
+const UserSessionProvider = ({ session, children }: ProviderProps) => {
   return (
     <SessionProvider session={session}>
       {children}
@@ -15,4 +15,4 @@ const Provider = ({session, children}: ProviderProps) => {
   )
 };
 
-export default Provider
+export default UserSessionProvider

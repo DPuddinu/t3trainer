@@ -1,16 +1,13 @@
 'use client'
 
-import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "./primitives/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./primitives/ui/card";
-import { Spinner } from "./primitives/ui/spinner";
 
-export const Login = () => {
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: () => signIn('google'),
-  });
+export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
 
   return (
     <div className="flex justify-center items-center w-full">
@@ -22,7 +19,9 @@ export const Login = () => {
 
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
-          <Button className="w-full" onClick={() => mutate()}>{isPending ? <Spinner /> : 'Login with Google'}</Button>
+          <Button className="w-full" onClick={async () => await signIn('google', {
+            callbackUrl: callbackUrl ?? "/dashboard"
+          })}>Login with Google</Button>
           <Button disabled>Login with Discord</Button>
         </CardFooter>
       </Card>
