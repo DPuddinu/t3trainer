@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
-		"db:push": "dotenv drizzle-kit push:mysql",
+    "db:push": "dotenv drizzle-kit push:mysql",
 		"db:push-dev": "env-cmd -f ./.env.development dotenv drizzle-kit push:mysql",
 		"db:push-prod": "env-cmd -f ./.env.production dotenv drizzle-kit push:mysql",
 		"db:studio": "dotenv drizzle-kit studio",
