@@ -25,17 +25,21 @@ export const CreateUser = () => {
 
   return (
     <Dialog open={open} >
-      <DialogTrigger onClick={() => setOpen(true)} >
-        <Button>Create</Button>
+      <DialogTrigger asChild onClick={() => setOpen(true)} >
+        <Button variant='destructive'>Add client</Button>
       </DialogTrigger>
-      <DialogContent onClose={() => setOpen(false)}>
+      <DialogContent onClose={() => setOpen(false)} onKeyDown={(e) => {
+        if (e.code === 'Escape') {
+          setOpen(false);
+        }
+      }}>
         <DialogHeader>
           <DialogTitle>Create Client</DialogTitle>
         </DialogHeader>
         <form ref={ref} action={formAction} className="flex flex-col gap-2">
           <Input type="name" name="name" placeholder="name" />
           <Input type="email" name='email' placeholder="Email" />
-          <SubmitButton>Create User</SubmitButton>
+          <SubmitButton>Create</SubmitButton>
         </form>
         <p aria-live="polite" className="">
           {formState.message}

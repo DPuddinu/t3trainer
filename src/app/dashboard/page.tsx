@@ -1,33 +1,33 @@
-import { type PropsWithChildren } from "react";
+'use server'
+import { Suspense, type PropsWithChildren } from "react";
 import { CreateUser } from "~/components/crate-user";
-import { ActiveUserCard } from "~/components/dashboard/ActiveUserCard";
-import { MenuBarExample } from "~/components/menu-bar-example";
+import { ActiveUserCard } from "~/components/dashboard/active-user-card";
+import { MenuBar } from "~/components/dashboard/menu-bar";
 
-export default async function HomePage() {
- 
+export default async function DashboardPage() {
   return (
-    <div className="w-full flex flex-col p-2 grow">
+    <Suspense fallback={<div>loading dashboard...</div>}>
       <Content />
-    </div>
+    </Suspense>
   );
 }
 
 function Content() {
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-3xl font-mono">Dashboard</h1>
-      <div className="w-full h-[1px] bg-secondary" />
-      <section className="flex flex-col gap-2">
-        <div className="flex gap-2">
-
-          <MenuBarExample />
-          <CreateUser />
-        </div>
-        <CardContainer>
-          <ActiveUserCard />
-        </CardContainer>
-      </section>
+    <div className="w-full flex flex-col p-4 grow">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-3xl font-mono">Dashboard</h1>
+        <section className="flex flex-col gap-2">
+          <div className="flex justify-between gap-2">
+            <MenuBar />
+            <CreateUser />
+          </div>
+          <CardContainer>
+            <ActiveUserCard />
+          </CardContainer>
+        </section>
+      </div>
     </div>
   )
 }
