@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@auth/drizzle-adapter':
     specifier: ^0.3.6
@@ -35,7 +39,7 @@ dependencies:
     specifier: ^2.0.0
     version: 2.0.0
   drizzle-orm:
-    specifier: ^0.28.5
+    specifier: ^0.28.6
     version: 0.28.6(@planetscale/database@1.11.0)(mysql2@3.6.5)
   drizzle-zod:
     specifier: ^0.5.1
@@ -3300,7 +3304,3 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
