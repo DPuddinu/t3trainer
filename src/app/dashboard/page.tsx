@@ -1,12 +1,10 @@
 import { type PropsWithChildren } from "react";
+import { CreateUser } from "~/components/crate-user";
 import { ActiveUserCard } from "~/components/dashboard/ActiveUserCard";
 import { MenuBarExample } from "~/components/menu-bar-example";
-import { db } from "~/server/db";
-import { bodyParts } from "~/server/db/schema";
 
 export default async function HomePage() {
-  const data = await db.select().from(bodyParts);
-
+ 
   return (
     <div className="w-full flex flex-col p-2 grow">
       <Content />
@@ -21,8 +19,11 @@ function Content() {
       <h1 className="text-3xl font-mono">Dashboard</h1>
       <div className="w-full h-[1px] bg-secondary" />
       <section className="flex flex-col gap-2">
-        <MenuBarExample />
+        <div className="flex gap-2">
 
+          <MenuBarExample />
+          <CreateUser />
+        </div>
         <CardContainer>
           <ActiveUserCard />
         </CardContainer>

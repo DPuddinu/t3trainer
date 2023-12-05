@@ -20,7 +20,7 @@ export const exerciseType = mysqlEnum('exercise_type', ['sets x reps', 'strippin
 export const userRole = mysqlEnum('user_role', ['trainer', 'customer'])
 
 export const users = mysqlTable("users", {
-  id: bigint("id", { mode: "number" }).notNull().primaryKey(),
+  id: bigint("id", { mode: "number" }).primaryKey().unique().autoincrement(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   image: varchar("image", { length: 255 }),
