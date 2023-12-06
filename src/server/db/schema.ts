@@ -40,13 +40,8 @@ export const workouts = mysqlTable('workout', {
 export const exercises = mysqlTable('exercise', {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   name: varchar("name", { length: 256 }),
+  description: varchar("description", { length: 256 }),
   workoutId: bigint("workoutId", { mode: "number" })
-});
-
-export const bodyParts = mysqlTable('bodyparts', {
-  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-  name: varchar("name", { length: 256 }),
-  exerciseId: bigint("exerciseId", { mode: "number" })
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -61,17 +56,10 @@ export const workoutRelations = relations(workouts, ({ many, one }) => ({
   })
 }));
 
-export const exerciseRelations = relations(exercises, ({ one, many }) => ({
+export const exerciseRelations = relations(exercises, ({ one }) => ({
   workout: one(workouts, {
     fields: [exercises.workoutId],
     references: [workouts.id]
   }),
-  bodyParts: many(bodyParts),
 }));
 
-export const bodyPartsRelations = relations(bodyParts, ({ one }) => ({
-  exercise: one(exercises, {
-    fields: [bodyParts.exerciseId],
-    references: [exercises.id]
-  }),
-}));
