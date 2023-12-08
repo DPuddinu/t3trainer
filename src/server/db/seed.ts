@@ -1,12 +1,9 @@
-import { db } from ".";
+import { db, redis } from ".";
 import { exercises, workouts } from "./schema";
 
 
 async function main() {
-  await insertExercises();
-}
-
-async function insertExercises() {
+  // await insertExercises();
   const chest_exercises = [
     "Barbell Bench Press",
     "Dumbbell Flyes",
@@ -14,10 +11,17 @@ async function insertExercises() {
     "Decline Bench Press",
     "Push-Ups"
   ]
+  const op = await redis.lpush('exercises', ...chest_exercises)
+  console.log(op)
+
+}
+
+async function insertExercises() {
+
   const now = new Date();
 
 
-  const transaction = await db.transaction (async tx => {
+  const transaction = await db.transaction(async tx => {
     const wo = await db.insert(workouts).values({
       createdAt: now,
       expireAt: new Date(now.getTime() + 30 * 24 * 60 * 60),
@@ -34,6 +38,6 @@ async function insertExercises() {
     }))
   })
   console.log(transaction);
- 
+
 }
 await main()
